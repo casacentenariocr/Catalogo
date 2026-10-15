@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Catálogo | Casa Centenario</title>
+<style>
+:root{--green:#07552F;--green2:#0b6b3d;--cream:#f7f3e8;--gold:#c49a3a;--ink:#1e2822;--muted:#657069}
+*{box-sizing:border-box} body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#f4f5f2;color:var(--ink)}
+header{background:linear-gradient(135deg,var(--green),#123e2a);color:#fff;padding:28px 18px 22px;position:sticky;top:0;z-index:5;box-shadow:0 2px 12px #0002}
+.head{max-width:1200px;margin:auto}.brand{font-size:28px;font-weight:800;letter-spacing:.4px}.sub{opacity:.9;margin-top:5px}
+.controls{max-width:1200px;margin:18px auto 0;display:grid;grid-template-columns:1fr 240px;gap:10px}
+input,select{width:100%;padding:13px 14px;border:0;border-radius:10px;font-size:16px;outline:none}
+main{max-width:1200px;margin:22px auto;padding:0 16px}.summary{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:16px;color:var(--muted)}
+.grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.card{background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 3px 14px #00000012;border:1px solid #e5e7e2;display:flex;flex-direction:column}
+.pic{height:235px;background:var(--cream);display:flex;align-items:center;justify-content:center;position:relative}
+.pic img{width:100%;height:100%;object-fit:contain;padding:12px}.placeholder{padding:20px;text-align:center;color:#7b817d;font-weight:700}
+.body{padding:15px;display:flex;flex-direction:column;flex:1}.code{font-size:12px;color:#7b817d}.cat{font-size:12px;color:var(--green);font-weight:700;margin:6px 0}
+h2{font-size:16px;line-height:1.3;margin:2px 0 8px}.review{font-size:13px;line-height:1.45;color:#505a54;flex:1}
+.price{font-size:23px;font-weight:800;color:var(--green);margin-top:13px}.status{font-size:11px;color:#8a6a20;margin-top:6px}
+.empty{text-align:center;padding:60px 10px;color:var(--muted)} footer{text-align:center;padding:35px 15px;color:#68716c;font-size:13px}
+@media(max-width:900px){.grid{grid-template-columns:repeat(3,1fr)}} @media(max-width:680px){header{position:relative}.controls{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr)}.pic{height:200px}.brand{font-size:24px}}
+@media(max-width:430px){.grid{grid-template-columns:1fr}.pic{height:270px}}
+</style>
+</head>
+<body>
+<header><div class="head"><div class="brand">Casa Centenario</div><div class="sub">Catálogo de productos</div>
+<div class="controls"><input id="q" placeholder="Buscar por producto o código…"><select id="cat"><option value="">Todas las categorías</option></select></div></div></header>
+<main><div class="summary"><span id="count"></span><span>Precios en colones (₡)</span></div><div id="grid" class="grid"></div></main>
+<footer>Casa Centenario · Tel. 2216-4200 · Lunes a Viernes 10:00 a.m.–6:00 p.m.</footer>
+<script src="productos.js"></script>
+<script>
+const money=n=>new Intl.NumberFormat('es-CR',{style:'currency',currency:'CRC',maximumFractionDigits:0}).format(n);
+const all=(window.PRODUCTOS||[]).filter(p=>String(p.activo).toLowerCase()!=='no');
+const cat=document.getElementById('cat'),q=document.getElementById('q'),grid=document.getElementById('grid'),count=document.getElementById('count');
+[...new Set(all.map(p=>p.categoria||'Otros'))].sort((a,b)=>a.localeCompare(b,'es')).forEach(c=>{let o=document.createElement('option');o.value=c;o.textContent=c;cat.appendChild(o)});
+function esc(s){return String(s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
+function render(){
+ const term=q.value.trim().toLowerCase(),c=cat.value;
+ const arr=all.filter(p=>(!c||p.categoria===c)&&(!term||(p.producto+' '+p.codigo+' '+p.resena).toLowerCase().includes(term)));
+ count.textContent=arr.length+' producto'+(arr.length===1?'':'s');
+ if(!arr.length){grid.innerHTML='<div class="empty">No encontramos productos con esos filtros.</div>';return}
+ grid.innerHTML=arr.map(p=>`<article class="card"><div class="pic"><img src="imagenes/${encodeURIComponent(p.imagen)}" alt="${esc(p.producto)}" onerror="this.style.display='none';this.nextElementSibling.style.display='block'"><div class="placeholder" style="display:none">Imagen pendiente<br><small>${esc(p.codigo)}</small></div></div><div class="body"><div class="code">${esc(p.codigo)}</div><div class="cat">${esc(p.categoria)}</div><h2>${esc(p.producto)}</h2><div class="review">${esc(p.resena)}</div><div class="price">${money(p.precio)}</div>${p.estadoImagen?`<div class="status">${esc(p.estadoImagen)}</div>`:''}</div></article>`).join('');
+}
+q.addEventListener('input',render);cat.addEventListener('change',render);render();
+</script>
+</body></html>
