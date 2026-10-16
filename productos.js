@@ -948,7 +948,7 @@ window.PRODUCTOS = [
   {
     "codigo": "PTO00542",
     "producto": "Vino Mr Wildman Cabernet Sauvignon 12/750 Ml",
-    "precio": 5000,
+    "precio": 2850,
     "categoria": "Vinos Chilenos",
     "resena": "Cabernet Sauvignon chileno de Mr Wildman, de estilo joven, frutal y accesible.",
     "imagen": "PTO00542.jpg",
@@ -959,7 +959,7 @@ window.PRODUCTOS = [
   {
     "codigo": "PTO00541",
     "producto": "Vino Mr Wildman Carmenere 12/750 Ml",
-    "precio": 5000,
+    "precio": 2850,
     "categoria": "Vinos Chilenos",
     "resena": "Carménère chileno de Mr Wildman, de perfil frutal y especiado.",
     "imagen": "PTO00541.jpg",
@@ -970,7 +970,7 @@ window.PRODUCTOS = [
   {
     "codigo": "PTO00539",
     "producto": "Vino Mr Wildman Chardonnay 12/750 Ml",
-    "precio": 5000,
+    "precio": 2850,
     "categoria": "Vinos Chilenos",
     "resena": "Chardonnay chileno de Mr Wildman, fresco y frutal.",
     "imagen": "PTO00539.jpg",
@@ -981,7 +981,7 @@ window.PRODUCTOS = [
   {
     "codigo": "PTO00538",
     "producto": "Vino Mr Wildman Merlot 12/750 Ml",
-    "precio": 5000,
+    "precio": 2850,
     "categoria": "Vinos Chilenos",
     "resena": "Merlot chileno de Mr Wildman, suave y frutal.",
     "imagen": "PTO00538.jpg",
@@ -992,7 +992,7 @@ window.PRODUCTOS = [
   {
     "codigo": "PTO00540",
     "producto": "Vino Mr Wildman Rose 12/750 Ml",
-    "precio": 5000,
+    "precio": 2850,
     "categoria": "Vinos Chilenos",
     "resena": "Rosé chileno de Mr Wildman, ligero, fresco y frutal.",
     "imagen": "PTO00540.jpg",
