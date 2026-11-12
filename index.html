@@ -209,6 +209,12 @@ button,input{font:inherit}
  .dropdown button{padding:11px 10px;font-size:13px;min-height:40px}
  .register-nav{margin:8px 0;text-align:center;justify-content:center}
 }
+/* Botón flotante para volver al inicio */
+.back-to-top{position:fixed;right:22px;bottom:24px;z-index:90;width:58px;height:58px;border:1px solid #f1d28a;border-radius:12px;background:linear-gradient(145deg,#c92d32,#a91520);color:#fff;font-size:30px;font-weight:700;line-height:1;box-shadow:0 7px 20px rgba(0,0,0,.28);display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;visibility:hidden;transform:translateY(12px);transition:opacity .25s,transform .25s,visibility .25s}
+.back-to-top.visible{opacity:1;visibility:visible;transform:translateY(0)}
+.back-to-top:hover{filter:brightness(1.1);transform:translateY(-3px)}
+.back-to-top:focus-visible{outline:3px solid #f0d99e;outline-offset:3px}
+@media(max-width:600px){.back-to-top{right:16px;bottom:18px;width:54px;height:54px;border-radius:11px;font-size:28px}}
 </style>
 </head>
 <body>
@@ -365,6 +371,8 @@ button,input{font:inherit}
  <div class="footer-bottom">Precios publicados para compra en tienda física. Consulte condiciones y disponibilidad en tienda. Venta exclusiva para mayores de 18 años.</div>
 </div></footer>
 
+<button class="back-to-top" id="backToTop" type="button" aria-label="Volver al inicio" title="Volver al inicio">↑</button>
+
 <div class="modal" id="productModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
  <div class="modal-panel">
   <div class="modal-head"><h2 id="modalTitle"></h2><button class="modal-close" onclick="closeModal()" aria-label="Cerrar">×</button></div>
@@ -372,7 +380,16 @@ button,input{font:inherit}
  </div>
 </div>
 
-<script src="productos.js"></script>
+<script src="productos.js">// Mostrar el botón flotante al desplazarse y volver suavemente al inicio.
+const backToTopButton=document.getElementById('backToTop');
+function updateBackToTop(){
+ if(!backToTopButton)return;
+ backToTopButton.classList.toggle('visible',window.scrollY>320);
+}
+window.addEventListener('scroll',updateBackToTop,{passive:true});
+backToTopButton?.addEventListener('click',()=>window.scrollTo({top:0,behavior:'smooth'}));
+updateBackToTop();
+</script>
 <script>
 // =====================================================
 // MENSAJE DE LA CINTA: cambia únicamente el texto entre comillas.
