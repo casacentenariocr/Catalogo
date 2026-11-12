@@ -32,7 +32,7 @@ button,input{font:inherit}
 .header-links a{min-width:58px;text-decoration:none;text-align:center;font-size:11px;color:#f8f1df;display:flex;flex-direction:column;gap:5px;align-items:center}
 .header-links .ico{font-size:21px;color:var(--gold)}
 .header-links a:hover{color:var(--gold2)}
-.mobile-menu{display:none;background:none;border:1px solid #b99656;color:#f4dfad;border-radius:5px;padding:8px 11px}
+.mobile-menu{display:none;background:none;border:1px solid #b99656;color:#f4dfad;border-radius:5px;padding:8px 11px;cursor:pointer}
 .nav-band{border-top:1px solid #b8955144;border-bottom:1px solid #b8955144;background:#061f17}
 .nav-inner{max-width:1420px;margin:auto;padding:0 28px;display:flex;gap:4px;align-items:center;min-height:43px}
 .nav-item{position:relative}
@@ -196,6 +196,19 @@ button,input{font:inherit}
 .footer-register{display:inline-flex;margin-top:8px;padding:10px 14px;background:#d8b86e;color:#173b2d!important;border-radius:3px;font-weight:700;text-decoration:none}
 @media(max-width:760px){.register-nav{padding:8px 10px!important;font-size:10px}.register-hero{margin:10px 0 0}.hero-copy .gold-button{margin-right:6px}}
 
+/* Navegación móvil: abre con toque y no depende de hover */
+@media(max-width:820px){
+ .nav-band{display:none;border-top:1px solid #b8955166}
+ .nav-band.nav-open{display:block}
+ .nav-inner{display:flex;flex-direction:column;align-items:stretch;gap:0;padding:6px 14px 12px;overflow:visible;min-height:0}
+ .nav-item{width:100%;border-bottom:1px solid #ffffff18}
+ .nav-link,.nav-button{width:100%;display:flex;align-items:center;justify-content:space-between;text-align:left;padding:14px 10px;font-size:16px;white-space:normal}
+ .dropdown,.dropdown.two-col{display:none!important;position:static;min-width:0;width:100%;padding:8px 10px 12px;margin:0 0 8px;border-radius:5px;box-shadow:none;background:#fffdf8}
+ .nav-item.dropdown-open>.dropdown{display:block!important}
+ .nav-item.dropdown-open>.dropdown.two-col{display:grid!important;grid-template-columns:1fr 1fr}
+ .dropdown button{padding:11px 10px;font-size:13px;min-height:40px}
+ .register-nav{margin:8px 0;text-align:center;justify-content:center}
+}
 </style>
 </head>
 <body>
@@ -214,11 +227,11 @@ button,input{font:inherit}
    <a href="#nosotros"><span class="ico">ⓘ</span>Nosotros</a>
    <a href="#contacto"><span class="ico">◉</span>Contacto</a>
   </div>
-  <button class="mobile-menu" onclick="document.getElementById('navBand').classList.toggle('nav-open')">☰ Menú</button>
+  <button class="mobile-menu" type="button" aria-expanded="false" aria-controls="navBand" onclick="toggleMobileNav()">☰ Menú</button>
  </div>
  <div class="nav-band" id="navBand"><nav class="nav-inner">
   <a class="nav-link" href="#" onclick="resetCatalog()">Inicio</a>
-  <div class="nav-item"><button class="nav-button">Vinos <span>⌄</span></button>
+  <div class="nav-item"><button class="nav-button" type="button" aria-expanded="false">Vinos <span>⌄</span></button>
    <div class="dropdown two-col">
     <div><strong>Por estilo</strong>
      <button onclick="filterByTerms('Vinos tintos',['cabernet','merlot','malbec','carmenere','carménère','syrah','tempranillo','pinot noir'])">Tintos y variedades</button>
@@ -235,7 +248,7 @@ button,input{font:inherit}
     </div>
    </div>
   </div>
-  <div class="nav-item"><button class="nav-button">Destilados <span>⌄</span></button>
+  <div class="nav-item"><button class="nav-button" type="button" aria-expanded="false">Destilados <span>⌄</span></button>
    <div class="dropdown">
     <strong>Destilados y licores</strong>
     <button onclick="filterByCategory('Ron')">Ron</button><button onclick="filterByCategory('Whiskys')">Whisky</button>
@@ -380,6 +393,42 @@ const productos=(window.PRODUCTOS||[]).map(p=>{
  };
 });
 let currentCategory='Todos', currentTerms=null, wineOnly=false, offersOnly=false, allProductsMode=false;
+
+function toggleMobileNav(){
+ const band=document.getElementById('navBand');
+ const button=document.querySelector('.mobile-menu');
+ const open=band.classList.toggle('nav-open');
+ button.setAttribute('aria-expanded',String(open));
+ if(!open) closeMobileDropdowns();
+}
+function closeMobileDropdowns(){
+ document.querySelectorAll('.nav-item.dropdown-open').forEach(item=>{
+  item.classList.remove('dropdown-open');
+  const btn=item.querySelector('.nav-button');
+  if(btn)btn.setAttribute('aria-expanded','false');
+ });
+}
+function closeMobileNav(){
+ const band=document.getElementById('navBand');
+ const button=document.querySelector('.mobile-menu');
+ if(band)band.classList.remove('nav-open');
+ if(button)button.setAttribute('aria-expanded','false');
+ closeMobileDropdowns();
+}
+
+document.querySelectorAll('.nav-item > .nav-button').forEach(button=>{
+ button.addEventListener('click',()=>{
+  if(window.matchMedia('(max-width: 820px)').matches){
+   const item=button.closest('.nav-item');
+   const willOpen=!item.classList.contains('dropdown-open');
+   closeMobileDropdowns();
+   item.classList.toggle('dropdown-open',willOpen);
+   button.setAttribute('aria-expanded',String(willOpen));
+  }
+ });
+});
+document.querySelectorAll('#navBand .nav-link').forEach(link=>link.addEventListener('click',closeMobileNav));
+window.addEventListener('resize',()=>{if(window.innerWidth>820)closeMobileNav()});
 const grid=document.getElementById('productGrid');
 const search=document.getElementById('search');
 function esc(v){return String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
