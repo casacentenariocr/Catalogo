@@ -440,18 +440,21 @@ function isProductOffer(p){
 }
 
 function filterByCategory(category){
+ closeMobileNav();
  currentCategory=category;currentTerms=null;wineOnly=false;offersOnly=false;allProductsMode=true;search.value='';
  document.getElementById('listingTitle').textContent=category==='Todos'?'Todos los productos':category;
  document.getElementById('listingSubtitle').textContent='Explora nuestra selección disponible en Casa Centenario.';
  renderProducts();document.getElementById('destacados').scrollIntoView({behavior:'smooth'});
 }
 function filterByTerms(label,terms){
+ closeMobileNav();
  currentCategory='Todos';currentTerms=terms.map(x=>x.toLocaleLowerCase('es'));wineOnly=true;offersOnly=false;allProductsMode=true;search.value='';
  document.getElementById('listingTitle').textContent=label;
  document.getElementById('listingSubtitle').textContent='Productos que coinciden con esta selección.';
  renderProducts();document.getElementById('destacados').scrollIntoView({behavior:'smooth'});
 }
 function showOffers(){
+ closeMobileNav();
  currentCategory='Todos';currentTerms=null;wineOnly=false;offersOnly=true;allProductsMode=true;search.value='';
  document.getElementById('listingTitle').textContent='Ofertas especiales';
  document.getElementById('listingSubtitle').textContent='Productos con oferta registrada en la base maestra.';
@@ -459,6 +462,7 @@ function showOffers(){
  document.getElementById('destacados').scrollIntoView({behavior:'smooth',block:'start'});
 }
 function showFeaturedProducts(){
+ closeMobileNav();
  // Vuelve a la selección destacada en esta misma página, sin abrir otro HTML.
  currentCategory='Todos';
  currentTerms=null;
@@ -472,12 +476,14 @@ function showFeaturedProducts(){
  document.getElementById('destacados').scrollIntoView({behavior:'smooth',block:'start'});
 }
 function resetCatalog(){
+ closeMobileNav();
  currentCategory='Todos';currentTerms=null;wineOnly=false;offersOnly=false;allProductsMode=false;search.value='';
  document.getElementById('listingTitle').textContent='Productos destacados';
  document.getElementById('listingSubtitle').textContent='Selección de productos marcada desde el Excel maestro.';
  renderProducts();
 }
 function showAllProducts(){
+ closeMobileNav();
  currentCategory='Todos';currentTerms=null;wineOnly=false;offersOnly=false;allProductsMode=true;search.value='';
  document.getElementById('listingTitle').textContent='Catálogo completo';
  document.getElementById('listingSubtitle').textContent='Todos los productos activos de Casa Centenario.';
@@ -542,7 +548,8 @@ function openRecommendations(code){
  window.open('recomendaciones.html?codigo='+encodeURIComponent(code),'CasaCentenarioRecomendaciones','width=1000,height=780,resizable=yes,scrollbars=yes');
 }
 function closeModal(){document.getElementById('productModal').classList.remove('open')}
-search.addEventListener('input',()=>{currentCategory='Todos';currentTerms=null;offersOnly=false;allProductsMode=true;document.getElementById('listingTitle').textContent='Resultados del catálogo';renderProducts()});
+search.addEventListener('focus',closeMobileNav);
+search.addEventListener('input',()=>{closeMobileNav();currentCategory='Todos';currentTerms=null;offersOnly=false;allProductsMode=true;document.getElementById('listingTitle').textContent='Resultados del catálogo';renderProducts()});
 document.getElementById('productModal').addEventListener('click',e=>{if(e.target.id==='productModal')closeModal()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 renderProducts();
