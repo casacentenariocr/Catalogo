@@ -215,6 +215,97 @@ button,input{font:inherit}
 .back-to-top:hover{filter:brightness(1.1);transform:translateY(-3px)}
 .back-to-top:focus-visible{outline:3px solid #f0d99e;outline-offset:3px}
 @media(max-width:600px){.back-to-top{right:16px;bottom:18px;width:54px;height:54px;border-radius:11px;font-size:28px}}
+
+/* Tarjetas compactas horizontales en móvil, como la vista de referencia */
+@media(max-width:560px){
+ .product-grid{grid-template-columns:minmax(0,1fr)!important;gap:9px}
+ .product-card{display:flex;flex-direction:row;align-items:stretch;min-height:148px}
+ .product-photo{width:92px;min-width:92px;height:132px;align-self:center;padding:7px;background:#fff}
+ .product-photo img{max-width:100%;max-height:100%;object-fit:contain}
+ .product-tag{top:5px;left:5px;padding:3px 5px;font-size:8px}
+ .product-info{min-width:0;flex:1;padding:10px 10px 9px;justify-content:center}
+ .product-origin{font-size:9px;min-height:11px}
+ .product-info h3{font-size:14px;line-height:1.18;min-height:0;margin:3px 0 5px}
+ .product-meta{font-size:10px;min-height:0}
+ .price-line{display:flex;flex-direction:column;align-items:stretch;gap:5px;width:100%;margin:6px 0 0;font-family:Arial,sans-serif;font-size:10px;line-height:1.15;font-weight:500}
+ .price-line .price-row{display:flex;flex:0 0 100%;align-items:baseline;gap:3px;flex-wrap:nowrap;width:100%;max-width:100%;white-space:nowrap}
+ .price-line .price-label{font-family:Arial,sans-serif;font-size:8.5px;font-weight:500;color:#59645d;white-space:nowrap}
+ .price-line .regular-price del{font-family:Arial,sans-serif;font-size:10px;color:#85857d;font-weight:500;margin:0;white-space:nowrap}
+ .price-line .black-friday-price .price-label{color:#59645d;font-size:8.5px;font-weight:500}
+ .price-line .black-friday-price strong{font-family:Arial,sans-serif;font-size:12px;color:#bd2e25;font-weight:800;white-space:nowrap}
+ .price-line .sale{font-size:13px;color:#08743b}
+ .card-actions{display:none}
+}
+
+/* Corrección definitiva: cada precio ocupa una línea independiente en móvil */
+@media (max-width:560px){
+  .product-info .price-line{
+    display:block !important;
+    width:100% !important;
+    font-family:Arial,sans-serif !important;
+    font-size:10px !important;
+    line-height:1.25 !important;
+    white-space:normal !important;
+  }
+  .product-info .price-line .price-row{
+    display:block !important;
+    width:100% !important;
+    max-width:100% !important;
+    margin:0 !important;
+    padding:0 !important;
+    white-space:nowrap !important;
+    flex:none !important;
+  }
+  .product-info .price-line .price-row + .price-row{
+    margin-top:4px !important;
+  }
+  .product-info .price-line .price-label{
+    display:inline !important;
+    font-family:Arial,sans-serif !important;
+    font-size:9px !important;
+    font-weight:600 !important;
+    white-space:nowrap !important;
+  }
+  .product-info .price-line .regular-price del{
+    display:inline !important;
+    font-family:Arial,sans-serif !important;
+    font-size:10px !important;
+    white-space:nowrap !important;
+  }
+  .product-info .price-line .black-friday-price strong{
+    display:inline !important;
+    font-family:Arial,sans-serif !important;
+    font-size:12px !important;
+    color:#bd2e25 !important;
+    font-weight:800 !important;
+    white-space:nowrap !important;
+  }
+}
+
+/* Refuerzo: fuerza cada precio Black Friday a ser un bloque independiente */
+@media(max-width:560px){
+ .product-info .price-line .price-row{display:block!important;clear:both!important;float:none!important;position:static!important;width:100%!important;max-width:100%!important;white-space:normal!important}
+ .product-info .price-line .regular-price{margin-bottom:4px!important}
+ .product-info .price-line .black-friday-price{margin-top:0!important}
+}
+
+/* Estilo Black Friday: etiqueta negra con acento dorado y precio rojo */
+@media(max-width:560px){
+ .product-info .price-line{display:flex!important;flex-direction:column!important;align-items:flex-start!important;gap:5px!important;width:100%!important}
+ .product-info .price-line .price-row{display:flex!important;align-items:center!important;flex-wrap:nowrap!important;gap:4px!important;width:100%!important;max-width:100%!important;white-space:nowrap!important;clear:both!important;float:none!important;margin:0!important;padding:0!important;line-height:1.2!important}
+ .product-info .price-line .regular-price .price-label{display:inline!important;background:transparent!important;color:#26352d!important;font:600 9px Arial,Helvetica,sans-serif!important;padding:0!important;white-space:nowrap!important}
+ .product-info .price-line .regular-price del{display:inline!important;color:#85857d!important;font:500 10px Arial,Helvetica,sans-serif!important;white-space:nowrap!important}
+ .product-info .price-line .black-friday-price .price-label{display:inline-block!important;background:#111!important;color:#ffd84d!important;border-radius:3px!important;padding:3px 5px!important;font:800 8px Arial,Helvetica,sans-serif!important;letter-spacing:.1px!important;white-space:nowrap!important}
+ .product-info .price-line .black-friday-price strong{display:inline!important;color:#d71920!important;font:900 12px Arial,Helvetica,sans-serif!important;white-space:nowrap!important}
+}
+@media(min-width:561px){
+ .product-info .price-line{display:flex;flex-direction:column;align-items:flex-start;gap:6px}
+ .product-info .price-line .price-row{display:flex;align-items:center;gap:5px;white-space:nowrap}
+ .product-info .price-line .regular-price .price-label{font:600 12px Arial,Helvetica,sans-serif;color:#26352d}
+ .product-info .price-line .regular-price del{color:#85857d;font-size:12px}
+ .product-info .price-line .black-friday-price .price-label{display:inline-block;background:#111;color:#ffd84d;border-radius:4px;padding:4px 7px;font:800 11px Arial,Helvetica,sans-serif}
+ .product-info .price-line .black-friday-price strong{color:#d71920;font:900 16px Arial,Helvetica,sans-serif}
+}
 </style>
 </head>
 <body>
@@ -528,7 +619,14 @@ function renderProducts(){
   const imageSrc=imageName?'imagenes/'+encodeURIComponent(imageName):'';
   const isOffer=isProductOffer(p);
   const pct=isOffer?Math.round(Number(p.descuento)*100):0;
-  const price=isOffer?`<del>${money(p.precio)}</del><span class="sale">${money(p.precioOferta)}</span><small class="saving">-${pct}% · Ahorras ${money(Number(p.precio)-Number(p.precioOferta))}</small>`:money(p.precio);
+  const hasBlackFriday=Number.isFinite(Number(p.precioBlackFriday))&&Number(p.precioBlackFriday)>0;
+  const regularPrice=Number.isFinite(Number(p.precioRegular))&&Number(p.precioRegular)>0?Number(p.precioRegular):Number(p.precio);
+  const blackFridayPrice=hasBlackFriday?Number(p.precioBlackFriday):NaN;
+  const bfSaving=hasBlackFriday&&regularPrice>blackFridayPrice?regularPrice-blackFridayPrice:0;
+  const bfMoney=value=>'₡'+Number(value).toLocaleString('de-DE',{maximumFractionDigits:0});
+  const price=hasBlackFriday
+   ?`<div class="price-row regular-price"><span class="price-label">Precio Regular:</span> <del>${bfMoney(regularPrice)}</del></div><div class="price-row black-friday-price"><span class="price-label">Precio Black Friday</span> <strong>${bfMoney(blackFridayPrice)}</strong></div>`
+   :(isOffer?`<del>${money(p.precio)}</del><span class="sale">${money(p.precioOferta)}</span>`:money(p.precio));
   const image=imageSrc?`<img src="${esc(imageSrc)}" alt="${esc(p.nombre)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">`:'';
   const placeholder=`<div class="photo-placeholder" style="display:${imageSrc?'none':'grid'}"><span>✧</span></div>`;
   const badge=isOffer?`<span class="product-tag">Oferta · ${pct}%</span>`:(p.notaCatalogo&&/nuevo|novedad/i.test(p.notaCatalogo)?'<span class="product-tag new">Novedad</span>':'');
@@ -554,7 +652,13 @@ function openProduct(code){
  const fields=[['País de origen',f.pais],['Región / denominación',f.region],['Variedad / composición',f.composicion],['Elaboración / añejamiento',f.elaboracion],['Color',f.color],['Aroma / nariz',f.aroma],['Sabor / boca',f.sabor],['Graduación alcohólica',f.alcohol],['Maridaje / servicio',f.maridaje]].map(([k,v])=>[k,cleanFichaVisible(v)]).filter(x=>x[1]&& !/^no especificad[oa]/i.test(String(x[1])));
  const isOffer=isProductOffer(p);
  const pct=isOffer?Math.round(Number(p.descuento)*100):0;
- const price=isOffer?`<del>${money(p.precio)}</del> ${money(p.precioOferta)} <b style="color:#b82d24">(-${pct}%)</b>`:money(p.precio);
+ const hasBlackFriday=Number.isFinite(Number(p.precioBlackFriday))&&Number(p.precioBlackFriday)>0;
+ const regularPrice=Number.isFinite(Number(p.precioRegular))&&Number(p.precioRegular)>0?Number(p.precioRegular):Number(p.precio);
+ const blackFridayPrice=hasBlackFriday?Number(p.precioBlackFriday):NaN;
+ const bfSaving=hasBlackFriday&&regularPrice>blackFridayPrice?regularPrice-blackFridayPrice:0;
+ const price=hasBlackFriday
+  ?(bfSaving>0?`<del>${money(regularPrice)}</del> <b style="color:#bd2e25">${money(blackFridayPrice)}</b> <b style="color:#267047">(Ahorras ${money(bfSaving)})</b>`:`<b style="color:#bd2e25">${money(blackFridayPrice)}</b>`)
+  :(isOffer?`<del>${money(p.precio)}</del> ${money(p.precioOferta)} <b style="color:#b82d24">(-${pct}%)</b>`:money(p.precio));
  const specs=fields.length?`<div class="spec-grid">${fields.map(x=>`<div class="spec"><b>${esc(x[0])}</b>${esc(x[1])}</div>`).join('')}</div>`:`<p class="sin-ficha">${esc(MENSAJE_SIN_FICHA)}</p>`;
  const msg=encodeURIComponent(`Hola, quisiera consultar por ${p.nombre} (código ${p.codigo}).`);
  const recommendations='';
